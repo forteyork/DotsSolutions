@@ -21,6 +21,7 @@
 
             <!--Title-->
             <EditText
+                android:id="@+id/editDisplayName"
                 android:inputType="text"
                 android:hint="Display Name: "
                 android:background="@drawable/textfiled1"
@@ -29,17 +30,20 @@
 
             <!--Gender-->
             <RadioGroup
+                android:id="@+id/radGroup"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RadioButton
+                    android:id="@+id/radMale"
                     android:layout_weight="1"
                     android:text="Male"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <RadioButton
+                    android:id="@+id/radFemale"
                     android:layout_weight="1"
                     android:text="Female"
                     android:layout_width="match_parent"
@@ -49,6 +53,7 @@
 
             <!--Age-->
             <Spinner
+                android:id="@+id/spinnerAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -67,6 +72,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/txtLat"
                         android:textStyle="bold"
                         android:textSize="@dimen/h2"
                         android:text="Lat = 12.123456"
@@ -74,6 +80,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
+                        android:id="@+id/txtLng"
                         android:textStyle="bold"
                         android:textSize="@dimen/h2"
                         android:text="Lng = 12.123456"
@@ -85,6 +92,7 @@
 
 
                 <ImageView
+                    android:id="@+id/imvPoint"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:src="@drawable/ic_action_point"
@@ -95,6 +103,7 @@
 
             <!--Pic-->
             <ImageView
+                android:id="@+id/imvPhoto"
                 android:src="@drawable/photo"
                 android:layout_margin="@dimen/margin"
                 android:layout_gravity="center_horizontal"
@@ -107,12 +116,14 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/imvGallery"
                     android:src="@drawable/gallery"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
 
                 <ImageView
+                    android:id="@+id/imvCamera"
                     android:src="@drawable/camera"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -125,6 +136,7 @@
     </ScrollView>
 
     <Button
+
         android:layout_alignParentBottom="true"
         android:id="@+id/btnUpload"
         android:text="Upload"
