@@ -32,13 +32,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!--Login-->
-        <Button
-            android:id="@+id/btnLogin"
-            android:background="@drawable/bg_buttom"
-            android:text="Login"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+            <!--Login-->
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/btnLogin"
+                android:background="@drawable/bg_buttom"
+                android:text="Login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--QR Code-->
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/btnQR"
+                android:background="@drawable/bg_buttom"
+                android:text="QR Code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
