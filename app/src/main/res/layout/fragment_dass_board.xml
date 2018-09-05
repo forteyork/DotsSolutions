@@ -37,13 +37,14 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/txtBalanceA"
+
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/h2"
                 android:text="Name of CompanyA = "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/txtBalanceA"
                 android:gravity="center_vertical"
                 android:text="1234"
                 android:textSize="@dimen/h2"
@@ -75,7 +76,7 @@
                 <TextView
                     android:id="@+id/txtBalanceB"
                     android:gravity="center_vertical"
-                    android:text="1234"
+                    android:text="0"
                     android:textSize="@dimen/h2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -102,8 +103,9 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/txtTotal"
-                    android:text="6000 "
+
+                    android:id="@+id/txtTotal"
+                        android:text="6000 "
                     android:textStyle="bold"
                     android:textSize="@dimen/h2"
                     android:layout_width="wrap_content"

@@ -5,7 +5,7 @@ public class MyConstant {
 //    URL
 
     private String urlGetUserWhereCustID = "https://www.dots.co.th/App/getUserWherePhone.php";
-    private String urlGetBalanceWhereCustID = "https://www.dots.co.th/App/getBalanceAWhereIDCustomer.php";
+    private String urlGetBalanceAWhereCustIDAndIsCancel = "https://www.dots.co.th/App/getBalanceAWhereCustID_iscancel.php";
 
     private int[] iconInts=new int[]{
             R.drawable.ic_action_dash,
@@ -33,17 +33,16 @@ public class MyConstant {
             "Fname",
             "Lname",
             "Mobile",
-            "CustName",
             "CustStatusName",
-            "CusStatusSubName"
+            "CustStatusSubName"
     };
 
 
 //    Getter
 
 
-    public String getUrlGetBalanceWhereCustID() {
-        return urlGetBalanceWhereCustID;
+    public String getUrlGetBalanceAWhereCustIDAndIsCancel() {
+        return urlGetBalanceAWhereCustIDAndIsCancel;
     }
 
     public int[] getIconInts() {
