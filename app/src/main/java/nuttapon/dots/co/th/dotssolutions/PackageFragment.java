@@ -2,12 +2,16 @@ package nuttapon.dots.co.th.dotssolutions;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 
 
 /**
@@ -28,8 +33,9 @@ public class PackageFragment extends Fragment {
 
     private MyConstant myConstant = new MyConstant();
     private MyAlert myAlert;
-    private String displayNameString, genderString, ageString;
+    private String displayNameString, genderString, ageString, latString, lngSting;
     private boolean genderABoolean = true, ageABoolean = true;
+
 
 
 
@@ -56,7 +62,81 @@ public class PackageFragment extends Fragment {
 //        point controller
         pointController();
 
+//        Gallery Controller
+        galleryController();
+
     } // Main Method
+
+    private void galleryController() {
+        ImageView imageView = getView().findViewById(R.id.imvGallery);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 100);
+
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+
+            switch (requestCode) {
+                case 50:
+                    double latADouble = data.getDoubleExtra("Lat", 0);
+                    double lngADouble = data.getDoubleExtra("Lng", 0);
+                    Log.d("6SepV1", "Lat Receive ==>" + latADouble);
+                    Log.d("6SepV1", "Lng Receive ==>" + lngADouble);
+
+                    TextView latTextView = getView().findViewById(R.id.txtLat);
+                    TextView lngTextView = getView().findViewById(R.id.txtLng);
+                    latTextView.setText("Lat = " + Double.toString(latADouble));
+                    lngTextView.setText("Lng = " + Double.toString(lngADouble));
+
+                    break;
+                case 100:
+                    if (resultCode == getActivity().RESULT_OK) {
+                        Uri uri = data.getData();
+                        showPhoto(uri);
+                    } else {
+                        myAlert.normalDialog("Not Photo", "Please Choose photo on gallery");
+
+                    }
+
+                    break;
+            }
+
+
+
+
+
+
+
+
+    } // onActivityResult
+
+    private void showPhoto(Uri uri) {
+
+        try{
+
+            Bitmap bitmap = BitmapFactory.decodeStream(getActivity()
+                    .getContentResolver()
+                    .openInputStream(uri));
+
+            Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 800, 600, false);
+            ImageView imageView = getView().findViewById(R.id.imvPhoto);
+            imageView.setImageBitmap(bitmap);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 
     private void pointController() {
         ImageView imageView = getView().findViewById(R.id.imvPoint);

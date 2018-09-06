@@ -1,6 +1,7 @@
 package nuttapon.dots.co.th.dotssolutions;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,6 +26,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private double latADouble = 0, lngADouble = 0;
+    private double endLatADouble, endLngADouble;
     private LocationManager locationManager;
     private Criteria criteria;
 
@@ -54,8 +57,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void findLatLng() {
 
 //        For Network
+        Location networkLocation = myFindLocation(LocationManager.NETWORK_PROVIDER);
+        if (networkLocation != null) {
+            latADouble = networkLocation.getLatitude();
+            lngADouble = networkLocation.getLongitude();
+        }
 
 //        For GPS
+        Location gpsLocation = myFindLocation(locationManager.GPS_PROVIDER);
+        if (gpsLocation != null) {
+            latADouble = gpsLocation.getLatitude();
+            lngADouble = gpsLocation.getLongitude();
+        }
+
+        Log.d("6SepV1", "Lat ==>" + latADouble);
+        Log.d("6SepV1", "Lng ==>" + lngADouble);
 
     }
 
@@ -139,6 +155,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(MapsActivity.this, ServiceActivity.class);
+                intent.putExtra("Lat", endLatADouble);
+                intent.putExtra("Lng", endLngADouble);
+                setResult(50, intent);
                 finish();
             }
         });
@@ -149,9 +170,41 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //Create Center Map
+        if (latADouble != 0) {
+
+            LatLng centerLatLng = new LatLng(latADouble, lngADouble);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerLatLng, 16));
+            createMarker(centerLatLng);
+        } else {
+            findLatLng();
+        }
+
+//        Map Controller
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+                mMap.clear();
+                createMarker(latLng);
+
+            }
+        });
+
+        // onMap
+    } // Main Class
+
+
+
+    private void createMarker(LatLng latLng) {
+
+        endLatADouble = latLng.latitude;
+        endLngADouble = latLng.longitude;
+
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng);
+
+
+        mMap.addMarker(markerOptions);
     }
-} // Main Class
+}
