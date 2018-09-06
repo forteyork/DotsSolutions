@@ -2,6 +2,7 @@ package nuttapon.dots.co.th.dotssolutions;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Criteria;
@@ -38,7 +39,7 @@ public class PackageFragment extends Fragment {
 
     private MyConstant myConstant = new MyConstant();
     private MyAlert myAlert;
-    private String displayNameString, genderString, ageString, latString, lngSting;
+    private String displayNameString, genderString, ageString, latString, lngSting, imagePathString;
     private boolean genderABoolean = true, ageABoolean = true;
     private Uri cameraUri;
 
@@ -168,6 +169,19 @@ public class PackageFragment extends Fragment {
 
         try{
 
+            String[] strings = new String[]{MediaStore.Images.Media.DATA};
+            Cursor cursor = getActivity().getContentResolver().query(uri, strings, null, null, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int i = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                imagePathString = cursor.getString(i);
+            } else {
+                imagePathString = uri.getPath();
+            }
+            Log.d("6SepV3", "imagePath ==>" + imagePathString);
+
+
             Bitmap bitmap = BitmapFactory.decodeStream(getActivity()
                     .getContentResolver()
                     .openInputStream(uri));
@@ -259,9 +273,11 @@ public class PackageFragment extends Fragment {
                 } else if (genderABoolean){
 
                     myAlert.normalDialog(getString(R.string.title_no_gender), getString(R.string.message_no_gender));
-                } else if (ageABoolean){
+                } else if (ageABoolean) {
                     myAlert.normalDialog("No Age",
                             "Please Choose Age");
+                } else {
+                    uploadPhotoToServer();
                 }
 
 
@@ -269,6 +285,10 @@ public class PackageFragment extends Fragment {
 
 
             } // on click
+
+            private void uploadPhotoToServer() {
+
+            }
         });
     }
 
