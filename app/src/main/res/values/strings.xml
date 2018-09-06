@@ -12,6 +12,8 @@
     <string name="message_have_space">กรุณากรอกทุกช่อง</string>
     <string name="title_no_gender">ยังไม่ได้เลือกเพศ</string>
     <string name="message_no_gender">กรุณาเลือกเพศด้วยค่ะ</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="choose_point">โปรดเลือกพิกัด โดยการคลิกบนแผนที่</string>
 
 
 </resources>
