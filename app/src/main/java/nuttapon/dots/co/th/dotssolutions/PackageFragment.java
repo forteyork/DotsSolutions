@@ -7,8 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Switch;
 
 
 /**
@@ -18,7 +23,9 @@ public class PackageFragment extends Fragment {
 
     private MyConstant myConstant = new MyConstant();
     private MyAlert myAlert;
-    private String displayNameString;
+    private String displayNameString, genderString, ageString;
+    private boolean genderABoolean = true, ageABoolean = true;
+
 
 
     public PackageFragment() {
@@ -33,7 +40,59 @@ public class PackageFragment extends Fragment {
 //        upload controller
         uploadController();
 
+//        radioGroup
+        RadioGroup();
+
+//        spinner controller
+        spinnerController();
+
     } // Main Method
+
+    private void spinnerController() {
+        Spinner spinner = getView().findViewById(R.id.spinnerAge);
+
+                final String[] ageStrings = myConstant.getAgeStrings();
+                ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_expandable_list_item_1, ageStrings);
+                spinner.setAdapter(stringArrayAdapter);
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                        if (position != 0) {
+                            ageABoolean = false;
+                            ageString = ageStrings[position];
+                        } else {
+                            ageABoolean = true;
+                        }
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        ageABoolean =true;
+                    }
+                });
+    }
+
+    private void RadioGroup() {
+        RadioGroup radioGroup = getView().findViewById(R.id.radGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId){
+                    case R.id.radMale:
+                        genderString = "Male";
+                        break;
+                    case R.id.radFemale:
+                        genderString = "Female";
+                        break;
+                }
+
+                genderABoolean = false;
+            }
+        });
+    }
 
     private void uploadController() {
         Button button = getView().findViewById(R.id.btnUpload);
@@ -47,10 +106,17 @@ public class PackageFragment extends Fragment {
                 displayNameString = editText.getText().toString().trim();
 
                 if (displayNameString.isEmpty()){
-                    myAlert.normalDialog(getString(R.string.title_have_space),
+                    myAlert.normalDialog(getString(R.string.title_no_gender),
                             getString(R.string.message_have_space));
 
+                } else if (genderABoolean){
+
+                    myAlert.normalDialog(getString(R.string.title_no_gender), getString(R.string.message_no_gender));
+                } else if (ageABoolean){
+                    myAlert.normalDialog("No Age",
+                            "Please Choose Age");
                 }
+
 
 
 
